@@ -30,7 +30,7 @@ const userRegister = async(req,res)=>{
     const newUser = new userModel({email,password:hashCodePassword,fullname,mobile});
     await newUser.save();
     // 201: user created successfully request
-    res.status(201).json({message:"user created successfully",userCreated:newUser});
+    res.status(201).json({message:"user created successfully",userCreated:newUser},newUser);
 
    } catch (error) {
     // 204 : indicative of a successful request
@@ -55,7 +55,7 @@ const userLogin = async (req,res) =>{
         // console.log(TOKEN)
         
         // 200: authorized login its all ok
-        res.status(200).json({message:"user logged in successfully",TOKEN, loginUser:user})
+        res.status(200).json({message:"user logged in successfully",TOKEN, loginUser:user},user)
     } catch (error) {
         
         res.status(400).json({error:error.message});
