@@ -8,10 +8,6 @@ import cors from "cors"
 dotenv.config()
 connectDb();
 
-const express = require('express');
-const cors = require('cors');
-
-const app = express();
 
 // Configure CORS options
 const corsOptions = {
@@ -20,17 +16,13 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Auth'], // Allowed headers
 };
 
-
-
-
-
 // initialized
 const expressApp = express();
 const port = process.env.PORT;
 
 // important middleware
 // Use CORS middleware
-app.use(cors(corsOptions));
+expressApp.use(cors(corsOptions));
 
 expressApp.use(bodyParser.json());
 expressApp.use("/user",userRoutes);
