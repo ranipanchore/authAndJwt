@@ -8,13 +8,29 @@ import cors from "cors"
 dotenv.config()
 connectDb();
 
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+
+// Configure CORS options
+const corsOptions = {
+  // origin: 'http://your-frontend-domain.com', // Replace with your frontend's URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Auth'], // Allowed headers
+};
+
+
+
+
 
 // initialized
 const expressApp = express();
 const port = process.env.PORT;
 
 // important middleware
-expressApp.use(cors());
+// Use CORS middleware
+app.use(cors(corsOptions));
 
 expressApp.use(bodyParser.json());
 expressApp.use("/user",userRoutes);
