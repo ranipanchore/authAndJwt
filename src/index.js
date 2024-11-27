@@ -12,6 +12,7 @@ const corsOptions = {
     allowedHeaders:['Content-Type', 'Auth'] //allow headers
 }
 
+
 // initialized
 const expressApp = express();
 const port = process.env.PORT;
