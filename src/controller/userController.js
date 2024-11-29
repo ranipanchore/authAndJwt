@@ -19,18 +19,19 @@ try {
 }
 const userRegister = async(req,res)=>{
    try {
-    const {email,password,fullname,mobile} = req.body;
-    // console.log({email,password,fullname,mobile});
+    const {email,password,fullname,mobile,role} = req.body;
+    console.log({email,password,fullname,mobile,role});
 
     // password in hash code from bcrypt
     const saltMixture = await bcrypt.genSalt(10)
     const hashCodePassword = await bcrypt.hash(String(password),saltMixture);
     // console.log(hashCodePassword);
 
-    const newUser = new userModel({email,password:hashCodePassword,fullname,mobile});
+    const newUser = new userModel({email,password:hashCodePassword,fullname,mobile,role});
     await newUser.save();
+    console.log(newUser)
     // 201: user created successfully request
-    res.status(201).json({message:"user created successfully",newUser});
+    res.status(201).json({message:"user created successfully",newUser:newUser});
 
    } catch (error) {
     // 204 : indicative of a successful request
@@ -49,9 +50,10 @@ const userLogin = async (req,res) =>{
             // 401 : unauthorize login
             res.status(401).json({message:"invalid credential"})
         }
-
+        const payload = {_id: user._id , role:user.role};
+        console.log(payload)
         // token generate from jwt (json web token) from method of jwt.sign to generate token
-        const TOKEN = jwt.sign({_id:user.email},secretKey)
+        const TOKEN = jwt.sign(payload,secretKey)
         // console.log(TOKEN)
         
         // 200: authorized login its all ok
